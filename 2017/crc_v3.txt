@@ -673,6 +673,7 @@ Some popular polys are:
 
 
 8. A Straightforward CRC Implementation
+8. 一个直接的CRC实现
 ---------------------------------------
 That's the end of the theory; now we turn to implementations. To start
 with, we examine an absolutely straight-down-the-middle boring
@@ -680,6 +681,7 @@ straightforward low-speed implementation that doesn't use any speed
 tricks at all. We'll then transform that program progessively until we
 end up with the compact table-driven code we all know and love and
 which some of us would like to understand.
+理论的部分到这里就结束了；现在我们来实现一下。这里我们直白的实现算法，不使用任何加速的技巧。然后我们渐进的修改程序，直到使用我们所熟知的表驱动代码。
 
 To implement a CRC algorithm all we have to do is implement CRC
 division. There are two reasons why we cannot simply use the divide
@@ -687,6 +689,7 @@ instruction of whatever machine we are on. The first is that we have
 to do the divide in CRC arithmetic. The second is that the dividend
 might be ten megabytes long, and todays processors do not have
 registers that big.
+为了实现一个CRC算法，我们需要做的就是实现CRC除法。有两个原因致使我们不能简单地使用除法指令。第一我们要用的是CRC算术的除法；第二是被除数可能很长，现在的处理器无法一次性处理。
 
 So to implement CRC division, we have to feed the message through a
 division register. At this point, we have to be absolutely precise
@@ -696,11 +699,13 @@ each byte being considered to be the most significant bit (MSB). The
 bit stream formed from these bytes will be the bit stream with the MSB
 (bit 7) of the first byte first, going down to bit 0 of the first
 byte, and then the MSB of the second byte and so on.
+所以为了实现CRC除法，我们需要将消息灌到一个除法寄存器中。在接下来的例子中，消息会被当成是一个字节流（每一个是8bit），其中每个字节的bit 7被当做是最高有效位（MSB）。
 
 With this in mind, we can sketch an implementation of the CRC
 division. For the purposes of example, consider a poly with W=4 and
 the poly=10111. Then, the perform the division, we need to use a 4-bit
 register:
+作为了一个例子，考虑一个多项式，W=4，这个多项式=10111。然后，执行除法，我们需要使用一个4-bit寄存器：
 
                   3   2   1   0   Bits
                 +---+---+---+---+
@@ -723,6 +728,7 @@ To perform the division perform the following:
          Register = Register XOR Poly.
       End
    The register now contains the remainder.
+   
 
 (Note: In practice, the IF condition can be tested by testing the top
  bit of R before performing the shift.)
@@ -792,7 +798,7 @@ advance SOLELY from the top THREE bits t7, t6, and t5. In fact, in
 general, the value of the top bit in the register in k iterations can
 be calculated from the top k bits of the register. Let us take this
 for granted for a moment.
-
+新的高bit（它将会控制下次迭代）现在的值是t6 + t7*g7。现在需要注意的是，计算新的高bit所需要的信息在
 
 Consider for a moment that we use the top 8 bits of the register to
 calculate the value of the top bit of the register during the next 8
