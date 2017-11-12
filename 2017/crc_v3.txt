@@ -715,6 +715,7 @@ register:
              1    0   1   1   1   = The Poly
 
 (Reminder: The augmented message is the message followed by W zero bits.)
+（提醒：扩充的消息跟在W个0 bit后边）
 
 To perform the division perform the following:
 
@@ -728,6 +729,7 @@ To perform the division perform the following:
          Register = Register XOR Poly.
       End
    The register now contains the remainder.
+   算法伪代码
    
 
 (Note: In practice, the IF condition can be tested by testing the top
@@ -807,14 +809,17 @@ calculated values (which we could perhaps store in a single byte
 register and shift out to pick off each bit). Then we note three
 things:
 
+
    * The top byte of the register now doesn't matter. No matter how
      many times and at what offset the poly is XORed to the top 8
      bits, they will all be shifted out the right hand side during the
      next 8 iterations anyway.
+     寄存器中的首字节不重要。
 
 
    * The remaining bits will be shifted left one position and the
      rightmost byte of the register will be shifted in the next byte
+     
 
    AND
 
