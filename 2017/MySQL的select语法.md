@@ -38,7 +38,7 @@ SELECT
 
 如下是我总结的select语法流程图：
 
-![select语法流程图](http://mdimg.fabuler.cn/1711/p002.png)
+![](http://mdimg.fabuler.cn/1711/p002.png)
 
 ## 知识点
 
